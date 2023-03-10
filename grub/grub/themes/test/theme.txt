@@ -1,0 +1,14 @@
+title-text: "TITANFALL | 2"
+title-font: "Gemina 2 Regular 50"
+desktop-image: "760106.png"
+terminal-font: "Gemina 2 Regular 16"
++ label {
+        left = 50%-350
+        top = 50%+260
+        height = 30
+        width = 30
+      
+        text = "suck my balls"
+      
+        color = "white"
+}
