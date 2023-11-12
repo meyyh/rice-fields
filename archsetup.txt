@@ -99,5 +99,28 @@ copy over wallpapers form nas
 
 upload this text doc to git and edit on pc
 
+edit /etc/pacman.d/hooks/nvidia.hook
+
+
+blacklist nouveau driver in /etc/modprobe.d/nvidia.conf
+
+after mkinitcpio hyprland fails to launch
+
+add nvidia_drm.modeset=1 in grub cfg according to hyprland wiki
+
+
+also install and enable os-prober
+
+then run grub-mkconfig
+
+also add options nvidia-drm modeset=1 to /etc/modprobe.d/nvidia.conf
+
+then regen cpio
+
+starting aosp and setting git uname and email
+
+nvm i got the pdf reader to install
+
+now i setup xdg-user-dirs: run xdg-user-dirs-update
 
 
