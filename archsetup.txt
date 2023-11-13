@@ -1,0 +1,103 @@
+i am connected to eth and internet works
+cat /sys/firmware/efi/fw_platform_size
+
+lsblk
+# my disk i am using is sdd
+fdisk /dev/sdd
+delete all partitions
+new gpt table
+then make 
+1G
+50G
+rest of disk
+change type of efi partition to efi 01
+write
+
+mkfs.fat -F 32 /dev/sdd1
+mkfs.ext4 /dev/sdd2
+mkfs.ext4 /dev/sdd3
+
+mount /dev/sdd2 /mnt 
+mount --mkdir /dev/sdd1 /mnt/boot
+
+pacstrap -K /mnt base base-devel linux linux-firmware linux-headers efibootmgr grub vim networkmanager texinfo man-db man-pages openssh git 
+
+genfstab -U /mnt >> /mnt/etc/fstab
+
+arch-chroot /mnt
+
+ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
+hwclock --systohc
+
+vim /etc/locale.gen #en and ja_JP utf8
+
+vim /etc/locale.conf #LANG=en_US.UTF-8
+
+hostname
+
+passwd
+
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
+grub-mkconfig -o /boot/grub/grub.cfg
+
+reboot
+
+edit fstab
+#/dev/ROOT_PARTITION
+UUID=UUID /home ext4 defaults 0 0
+
+
+useradd -m meyyh
+passwd meyyh
+edit visudo
+usermod -aG wheel meyyh
+
+# here i logged into the pc as meyyh
+
+git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+
+add multilib to pacman
+
+yay -S nvidia-open-dkms hyprland kitty sddm-git firefox pipewire pipewire-alsa pipewire-jack wireplumber
+
+sudo systemctl start sddm-git
+login
+
+admire hyprchan "if she shows up"
+
+set resolution
+
+sign into firefox
+setup smb share to get old files back
+
+yay -S cifs-utils ntfs-3g
+
+make file /etc/serber-creds # i call my nas serber idk why
+username=_
+password=_
+use the real ones
+
+mkdir c 
+mkdir hdd
+mkdir mx500
+mkdir serber
+#my other drives
+
+############# forgor to mount home partition
+
+edit fstab
+#serber
+//192.168.0.3/d /serber cifs credentials=/etc/serber-creds,file_mode=0755,dir_mode=0755 0 0
+
+yay -S htop waybar dunst polkit-kde-agent swayidle swaybg swaylock-effects wofi
+
+copy over my hyprland config
+
+forgor to enable sddm 
+
+copy over wallpapers form nas
+
+upload this text doc to git and edit on pc
+
+
+
