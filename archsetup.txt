@@ -123,4 +123,47 @@ nvm i got the pdf reader to install
 
 now i setup xdg-user-dirs: run xdg-user-dirs-update
 
+install vscodium
+
+wayland version crashes
+
+fix it by adding
+-------------------------------
+{
+  "window.titleBarStyle": "custom",
+  ...
+}
+-------------------------------
+
+to .config/VSCodium/User/settings.json
+
+for normal vscode replace VSCodium with code
+
+start making task/calender app with qt cpp and cmake
+
+needed to install qt5/6-wayland
+
+nvm thats hard we using thunderbird for email and tasks
+
+now i install japanese font so instead of not understanding ascii error i can enjoy not understanding japanese but i can copy and paste (ﾉ◕ヮ◕)ﾉ*:・ﾟ✧
+
+lol the ascii is broke without jp font
+
+install ttf-hanazono ttf-symbola for ascii emojis
+
+install ttf-font-awesome for waybar but its using jp text for icons? tries to install ttf-jetbrains-mono did not help will fix this later
+
+to fix workspaces edit /etc/xdg/waybar/config and chage sway/workspaces to hyprland/workspaces
+
+now we steam ahead with sl jk were installing steam and pick nvidia option cus you know nvidia gpu
+
+now we install remmina and freerdp so i can access my linux iso seeding serber
+
+i installed qpwgraph to help trouble shoot remmina audio not working also change audio from non to local in advaced
+
+for some reason pipewire-pulse/alsa was not installed
+
+systemctl --user start pipewire-puls
+
+installed gimp
 
