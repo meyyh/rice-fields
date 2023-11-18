@@ -167,3 +167,68 @@ systemctl --user start pipewire-puls
 
 installed gimp
 
+cloning automatic1111
+
+its not working so trying with miniconda3
+
+conda create -n sd python=3.10.6
+
+conda activate sd
+
+conda install -c conda-forge gcc=
+
+edit webui-user.sh to venv=-
+
+well it works but the default model sucks so test it with something else
+
+now onto gpu passthrough yaaaaaaaaaaaaaaaaaaaaaaaaaaaay (I enjoy pain TᴖT)
+
+here is a link that helped me last time
+https://blandmanstudios.medium.com/tutorial-the-ultimate-linux-laptop-for-pc-gamers-feat-kvm-and-vfio-dee521850385
+
+first we install qemu-full and virt-manager
+
+Total Download Size:    171.37 MiB
+Total Installed Size:  1112.02 MiB
+wut
+
+L systemcrash during install going to try updateing before see if that helps
+
+system update did nothing just texinfo and qemu+virt manager installed fine so i guess were good?
+
+sudo systemctl enable & start libvird
+
+sudo usermod -aG libvirt USER so you dont need to enter root passwd
+
+here comes my first issue with the guide it tells you to put "intel_iommu=on iommu=pt rd.driver.pre=vfio-pci rd.driver.blacklist=nouveau modprobe.blacklist=nouveau nvidia-drm.modeset=1 vfio-pci.ids=10de:25a0,10de:2291 module_blacklist=nouveau" in your GRUB_CMDLINE_LINUX how do we figuew out what vfio-pci.ids to put run this command lspci -nnk ok but what ones lol get fucked mabye its in a different spot in the video but it should be there when he tells us about it so on to the arch wiki
+
+https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF bless this page i highly recomend reading it as its been very helpful for me when im confused on thing
+
+the page does mention gpu-passthrough-manager but i never got it to work
+
+quick aside im running an i5-12600k and rtx 2070 if you have an amd cpu or gpu or nvidia card older than 20 series you will likely have some different steps somewhere so just be aware of that
+
+also
+
+
+    Options in GRUB_CMDLINE_LINUX are always effective
+    Options in GRUB_CMDLINE_LINUX_DEFAULT are effective ONLY during normal boot (NOT during recovery mode).
+
+
+
+first thing we need to do is enable iommu so we are going to add all of the things the guide says but the pci ids to GRUB_CMDLINE_LINUX_DEFAULT in /etc/default/grub
+
+so the line should look something like this GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet nvidia_drm.modeset=1 intel_iommu=on iommu=pt rd.driver.pre=vfio-pci rd.driver.blacklist=nouveau modprobe.blacklist=nouveau module_blacklist=nouveau"
+
+now reboot and pray to arch-chan
+
+i must of not prayed hard enough as shit no workey
+
+you can test it with the commands and scripts in the vfio arch wiki
+
+no im just a fucking idjit and forgot to regen grub cfg
+
+grub-mkconfig -o /boot/grub/grub.cfg
+
+
+also do git config --global core.editor "vim"
