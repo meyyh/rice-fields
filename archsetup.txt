@@ -169,16 +169,6 @@ installed gimp
 
 cloning automatic1111
 
-its not working so trying with miniconda3
-
-conda create -n sd python=3.10.6
-
-conda activate sd
-
-conda install -c conda-forge gcc=
-
-edit webui-user.sh to venv=-
-
 well it works but the default model sucks so test it with something else
 
 now onto gpu passthrough yaaaaaaaaaaaaaaaaaaaaaaaaaaaay (I enjoy pain TᴖT)
