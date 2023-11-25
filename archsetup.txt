@@ -323,3 +323,27 @@ now en-nvidia
 less gooooo it worked
 
 its using nvidia 
+
+to to be able to use nvidia gpu on linux you must remove the vfio ids from grub and regen config
+
+installed obs and gstreamer-vaapi and xdg-desktop-portal-hyprland
+
+systemctl --user enable wireplumber
+systemctl --user enable pipewire
+
+install grim and slurp
+
+screens sharing still does not work F
+
+stating to setup catppuccin mocha
+
+list of things im using it for 
+
+hyprland
+qt5/6
+
+installed lightly-qt for a better qt5ct look
+
+i will keep it but not using it atm
+
+installed blender and p7zip
