@@ -357,3 +357,5 @@ intstalled intel-gpu-tools and hypland is using igpu
 the obs issue that made me reinstall was nvidia related works fine on intel igpu
 
 installed qt5-wayland, qt5ct, os-prober and libva
+
+all i had to do was intall the nvidia patch duh TᴖT
