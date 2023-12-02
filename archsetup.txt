@@ -347,3 +347,9 @@ installed lightly-qt for a better qt5ct look
 i will keep it but not using it atm
 
 installed blender and p7zip
+
+
+new reinstall
+
+
+intstalled intel-gpu-tools and hypland is using igpu
