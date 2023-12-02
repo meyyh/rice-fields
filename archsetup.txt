@@ -117,10 +117,6 @@ also add options nvidia-drm modeset=1 to /etc/modprobe.d/nvidia.conf
 
 then regen cpio
 
-starting aosp and setting git uname and email
-
-nvm i got the pdf reader to install
-
 now i setup xdg-user-dirs: run xdg-user-dirs-update
 
 install vscodium
@@ -138,8 +134,6 @@ fix it by adding
 to .config/VSCodium/User/settings.json
 
 for normal vscode replace VSCodium with code
-
-start making task/calender app with qt cpp and cmake
 
 needed to install qt5/6-wayland
 
