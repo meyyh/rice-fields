@@ -14,7 +14,7 @@ there are a few minor differences if you have an amd cpu but the biggest thing i
 - the secondary one is plugged into the mobo by DP
 - you using grub if you are not you can reference the [Kernel parameters](https://wiki.archlinux.org/title/Kernel_parameters) arch wiki page on what to do
 - you are using hyprland and sddm
-    - I dont know how much this matters
+    - I dont know how much this matters but be aware its using wayland
 
 # setup
 ## install required packages
@@ -23,62 +23,20 @@ yay -Syu && yay -S linux-firmware linux-headers
 ```
 ## intall gpu specific drivers 
 
-for me this is nvidia-open-dkms, intel-media-driver, and  xf86-video-intel.
-but make double check what driver you should use in the [NVIDIA] [AMD] [INTEL] arch wiki pages
+for me this is nvidia-open-dkms and intel-media-driver.
+but make double check what driver you should use in the [NVIDIA](https://wiki.archlinux.org/title/NVIDIA) [AMD](https://wiki.archlinux.org/title/AMDGPU) [INTEL](https://wiki.archlinux.org/title/Intel_graphics) arch wiki pages
+```
+yay -S nvidia-open-dkms intel-media-driver
+```
+## nvidia driver 
+if you are using nvidia go to section 1.3.1.3 of the nvidia page and setup the pacman hook otherwise if you forget to regen initramfs after a kernel update your system wont boot
+
+now add ```i915 vfio_pci vfio vfio_iommu_type1``` to MODULES=() and ~~~modprobe~~~in /etc/mkinitcpio.conf
 
 
-yay -S nvidia-open-dkms hyprland kitty sddm-git firefox pipewire pipewire-alsa pipewire-jack wireplumber
-
-sudo systemctl start sddm-git
-login
-
-admire hyprchan "if she shows up"
-
-set resolution
-
-sign into firefox
-setup smb share to get old files back
-
-yay -S cifs-utils ntfs-3g
-
-make file /etc/serber-creds # i call my nas serber idk why
-username=_
-password=_
-use the real ones
-
-mkdir c 
-mkdir hdd
-mkdir mx500
-mkdir serber
-#my other drives
-
-############# forgor to mount home partition
-
-edit fstab
-#serber
-//192.168.0.3/d /serber cifs credentials=/etc/serber-creds,file_mode=0755,dir_mode=0755 0 0
-
-yay -S htop waybar dunst polkit-kde-agent swayidle swaybg swaylock-effects wofi
-
-copy over my hyprland config
-
-forgor to enable sddm 
-
-copy over wallpapers form nas
-
-upload this text doc to git and edit on pc
-
-edit /etc/pacman.d/hooks/nvidia.hook
-
-
-blacklist nouveau driver in /etc/modprobe.d/nvidia.conf
-
-after mkinitcpio hyprland fails to launch
 
 add nvidia_drm.modeset=1 in grub cfg according to hyprland wiki
 
-
-also install and enable os-prober
 
 then run grub-mkconfig
 
