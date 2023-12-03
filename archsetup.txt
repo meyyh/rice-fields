@@ -353,3 +353,7 @@ the obs issue that made me reinstall was nvidia related works fine on intel igpu
 installed qt5-wayland, qt5ct, os-prober and libva
 
 all i had to do was intall the nvidia patch duh TᴖT
+
+sticking with web version of discord as desktop screensharing works and installing steam
+
+uncomment the first line in waybar config to set its layer to top so context menus show up on top
