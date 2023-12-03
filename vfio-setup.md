@@ -17,6 +17,8 @@ there are a few minor differences if you have an amd cpu but the biggest thing i
     - I dont know how much this matters but be aware its using wayland
 
 # setup
+## enable virtualization in your bios
+
 ## install required packages
 ```
 yay -Syu && yay -S linux-firmware linux-headers
@@ -31,7 +33,17 @@ yay -S nvidia-open-dkms intel-media-driver
 ## nvidia driver 
 if you are using nvidia go to section 1.3.1.3 of the nvidia page and setup the pacman hook otherwise if you forget to regen initramfs after a kernel update your system wont boot
 
-now add ```i915 vfio_pci vfio vfio_iommu_type1``` to MODULES=() and ~~~modprobe~~~in /etc/mkinitcpio.conf
+now add ```i915 vfio_pci vfio vfio_iommu_type1``` to MODULES=() and ```modprobe``` is in HOOKS=() in /etc/mkinitcpio.conf
+
+### grub config
+edit your /etc/default/grub so your GRUB_CMDLINE_LINUX_DEFAULT looks like this but with different vfio-pci.ids
+```
+GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet intel_iommu=on iommu=pt rd.driver.pre=vfio-pci vfio-pci.ids=10de:1f02,10de:10f9,10de:1ada,10de:1adb rd.driver.blacklist=nouveau modprobe.blacklist=nouveau module_blacklist=nouveau nvidia_drm.modeset=1"
+```
+- loglevel=3 quiet
+  - defaults
+- intel_iommu=on iommu=pt
+  - amd cpus dont need intel_iommu=on
 
 
 
