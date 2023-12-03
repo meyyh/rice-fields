@@ -378,3 +378,4 @@ Once you've managed to replace/upgrade it and you're ready to start the graphica
 
 # systemctl start graphical.target
 
+that did not help after a reboot so i removed the drm part from /etc/default/grub
