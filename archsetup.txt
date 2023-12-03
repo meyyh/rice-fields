@@ -357,3 +357,24 @@ installing gamescope
 uncomment the first line in waybar config to set its layer to top so context menus show up on top
 
 install intel-media-driver and xf86-video-intel
+
+
+nvidia_drm was being used and could not be disabled
+https://unix.stackexchange.com/questions/440840/how-to-unload-kernel-module-nvidia-drm
+
+
+
+I imagine you want to stop the display manager which is what I'd suspect would be using the Nvidia drivers.
+
+After change to a text console (pressing Ctrl+Alt+F2) and logging in as root, use the following command to disable the graphical target, which is what keeps the display manager running:
+
+# systemctl isolate multi-user.target
+
+At this point, I'd expect you'd be able to unload the Nvidia drivers using modprobe -r (or rmmod directly):
+
+# modprobe -r nvidia-drm
+
+Once you've managed to replace/upgrade it and you're ready to start the graphical environment again, you can use this command:
+
+# systemctl start graphical.target
+
