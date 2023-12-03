@@ -383,3 +383,5 @@ that did not help after a reboot so i removed the drm part from /etc/default/gru
 so i think the best option is to add the vfio ids back to grub because it keeps loading grub and sddm on gpu then once hyprland loads we can have it run the en-nvidia command to re enable it if we want
 
 the video did the vgs and audio ones im also putting drm modeset back in
+
+ok so only add i915 to mkinitcpio.conf and add all of the nvidia things including vfio ids so the gpu is disabled and the igpu can be the one used for loading as sddm gets confused still need to figure out how chaing the primary graphics optiions from auto to internal and back to auto fixes it but who knows then just have hyprland exec en-nvidia if you want to use it
