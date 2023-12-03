@@ -385,3 +385,11 @@ so i think the best option is to add the vfio ids back to grub because it keeps 
 the video did the vgs and audio ones im also putting drm modeset back in
 
 ok so only add i915 to mkinitcpio.conf and add all of the nvidia things including vfio ids so the gpu is disabled and the igpu can be the one used for loading as sddm gets confused still need to figure out how chaing the primary graphics optiions from auto to internal and back to auto fixes it but who knows then just have hyprland exec en-nvidia if you want to use it
+
+
+now we have the nvidia gpu disabled and can start setting up the vm
+download win 11/10 iso
+download virtio drivers from here https://github.com/virtio-win/virtio-win-pkg-scripts/blob/master/README.md 
+open virt-manager and setup the vm make sure to toggle edit before install at the end and make sure its setup with Q35, and UEFI oh and enable tpm
+
+now once you are at the desktop add your desktop shutdown and add the virtio iso and a small virtio disk to the vm then reboot and install the virtio drivers using the new small drive to check it works then shutdown and change the main drive to virt io interface
