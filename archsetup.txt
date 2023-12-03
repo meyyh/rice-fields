@@ -356,4 +356,6 @@ all i had to do was intall the nvidia patch duh TᴖT
 
 sticking with web version of discord as desktop screensharing works and installing steam
 
+installing gamescope
+
 uncomment the first line in waybar config to set its layer to top so context menus show up on top
