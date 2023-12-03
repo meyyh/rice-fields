@@ -184,7 +184,9 @@ sudo systemctl enable & start libvird
 
 sudo usermod -aG libvirt USER so you dont need to enter root passwd
 
-here comes my first issue with the guide it tells you to put "intel_iommu=on iommu=pt rd.driver.pre=vfio-pci rd.driver.blacklist=nouveau modprobe.blacklist=nouveau nvidia-drm.modeset=1 vfio-pci.ids=10de:25a0,10de:2291 module_blacklist=nouveau" in your GRUB_CMDLINE_LINUX how do we figuew out what vfio-pci.ids to put run this command lspci -nnk ok but what ones lol get fucked mabye its in a different spot in the video but it should be there when he tells us about it so on to the arch wiki
+here comes my first issue with the guide it tells you to put "nvidia-drm.modeset=1 intel_iommu=on iommu=pt rd.driver.pre=vfio-pci rd.driver.blacklist=nouveau modprobe.blacklist=nouveau module_blacklist=nouveau" in your GRUB_CMDLINE_LINUX how do we figure out what vfio-pci.ids to put run this command lspci -nnk ok but what ones lol get fucked mabye its in a different spot in the video but it should be there when he tells us about it so on to the arch wiki
+## dont add the vfio ids or gpu will be disabled by default
+
 
 https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF bless this page i highly recomend reading it as its been very helpful for me when im confused on thing
 
@@ -300,7 +302,7 @@ add the alias to your .bashrc file
 
 i edited mine to not be so long and remove some of the un needed and yes i understand irony 
 
-alias lsgpu='echo "Nvidia" && lspci -nnk | grep "VGA" -A 2 | grep "NVIDIA" -A 2 | grep "driver in use"'
+alias ls-gpu='echo "Nvidia" && lspci -nnk | grep "VGA" -A 2 | grep "NVIDIA" -A 2 | grep "driver in use"'
 alias en-nvidia='sudo virsh nodedev-reattach pci_0000_01_00_0 && sudo rmmod vfio_pci vfio_pci_core vfio_iommu_type1 && sudo modprobe -i nvidia_modeset nvidia_uvm nvidia && echo "gpu enabled"'
 alias dis-nvidia='sudo rmmod nvidia_modeset nvidia_uvm nvidia && sudo modprobe -i vfio_pci vfio_pci_core vfio_iommu_type1 && sudo virsh nodedev-detach pci_0000_01_00_0 && echo "gpu disabled"'
 
@@ -308,7 +310,7 @@ its a bit jank but much shorter and should still work i think
 
 source .bashrc
 
-ok lsgpu
+ok ls-gpu
 
 its vfio that means its "disabled" and able to be used for vms
 
