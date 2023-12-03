@@ -3,6 +3,8 @@
 this guide is specific to nvidia gpus so if you dont have one make sure you know what you are typing and why.
 there are a few minor differences if you have an amd cpu but the biggest thing is you **MUST** have 2 gpus for me thats an RTX 2070 and the iGPU of my 12600k we will rendering one of the useless to the host system while the vm is using it.
 
+# troubleshooting tips at bottom
+
 # this guide assumes that
 
 - you are using arch linux
@@ -41,13 +43,49 @@ edit your /etc/default/grub so your GRUB_CMDLINE_LINUX_DEFAULT looks like this b
 GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet intel_iommu=on iommu=pt rd.driver.pre=vfio-pci vfio-pci.ids=10de:1f02,10de:10f9,10de:1ada,10de:1adb rd.driver.blacklist=nouveau modprobe.blacklist=nouveau module_blacklist=nouveau nvidia_drm.modeset=1"
 ```
 - loglevel=3 quiet
-  - defaults
+>  - defaults  
+  
 - intel_iommu=on iommu=pt
-  - amd cpus dont need intel_iommu=on
+>  - amd cpus dont need intel_iommu=on
+- rd.driver.pre=vfio-pci vfio-pci.ids=###
+>  - rd.driver.pre makes sure the vfio driver gets loaded first or loaded at all idk and i will explain how to get vfio-pci.ids in the next part
+- rd.driver.blacklist=nouveau modprobe.blacklist=nouveau module_blacklist=nouveau
+>  - dont load nouveau driver
+- nvidia_drm.modeset=1
+>  - still dont know if this is needed or not
 
+## how to get vfio-pci.ids
+- if you are eve confused about something this guide has been very helpful https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF  
 
+in section 2.2 of that page it has a script to see your IOMMU groups this is important beacause all of the devices in a group have to be "using" the vfio driver or non of them can. if you have only some of them using it you will just get a bunch of errors 
 
-add nvidia_drm.modeset=1 in grub cfg according to hyprland wiki
+$~$
+
+when I run the script I see my nvidia gpu is in group 10
+```
+OMMU Group 10:
+	01:00.0 VGA compatible controller [0300]: NVIDIA Corporation TU106 [GeForce RTX 2070] [10de:1f02] (rev a1)
+	01:00.1 Audio device [0403]: NVIDIA Corporation TU106 High Definition Audio Controller [10de:10f9] (rev a1)
+	01:00.2 USB controller [0c03]: NVIDIA Corporation TU106 USB 3.1 Host Controller [10de:1ada] (rev a1)
+	01:00.3 Serial bus controller [0c80]: NVIDIA Corporation TU106 USB Type-C UCSI Controller [10de:1adb] (rev a1)
+```
+so my vfio ids look like this ```vfio-pci.ids=10de:1f02,10de:10f9,10de:1ada,10de:1adb```
+
+now that you have changed the mkinitcpio and grub config files run
+
+```
+sudo mkinitcpio -p linux && sudo grub-mkconfig -o /boot/grub/grub.cfg
+```
+after you reboot you can make sure it worked by running
+```
+sudo dmesg | grep -i -e DMAR -e IOMMU
+```
+and looking for
+> DMAR: IOMMU enabled
+and
+> DMAR: Intel(R) Virtualization Technology for Directed I/O
+or something mentioning AMD-Vi for amd cpus
+
 
 
 then run grub-mkconfig
@@ -324,3 +362,8 @@ now once you are at the desktop add your desktop shutdown and add the virtio iso
 now its time to add the gpu shutdown the vm and add pci host device then the gpu and the sound card (still not sure if its needed) now plug in a monitor to your gpu if you have not already and you can have 1 from mobo and one from gpu going to a signle monitor but there will be extra issues if you do that so be aware but its what im doing so i sould be able to help with that
 
 ok so all of the things in goup 10 from the arch wiki script need to be in the vfio pci list in grub and i think i dont know if i need to add all of them to the vm
+
+
+# troubleshooting
+after running ```sudo dmesg | grep -i -e DMAR -e IOMMU``` you dont see IOMMU enabled read over https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF
+
