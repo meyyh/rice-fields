@@ -161,20 +161,14 @@ systemctl --user start pipewire-puls
 
 installed gimp
 
-cloning automatic1111
-
-well it works but the default model sucks so test it with something else
-
 now onto gpu passthrough yaaaaaaaaaaaaaaaaaaaaaaaaaaaay (I enjoy pain TᴖT)
 
 here is a link that helped me last time
 https://blandmanstudios.medium.com/tutorial-the-ultimate-linux-laptop-for-pc-gamers-feat-kvm-and-vfio-dee521850385
 
-first we install qemu-full and virt-manager
+yay -S qemu-full virt-manager dnsmasq dmidecode
 
-Total Download Size:    171.37 MiB
-Total Installed Size:  1112.02 MiB
-wut
+
 
 L systemcrash during install going to try updateing before see if that helps
 
@@ -266,7 +260,7 @@ and remember kids alawys regen grub cfg before crossing the road
 
 and reboot
 
-now if you followed along perfectly and copied my config your jyprland will fail to load why ... fuck if i know time for troubleshooting
+now if you followed along perfectly and copied my config your hyprland will fail to load why ... fuck if i know time for troubleshooting
 
 ah so libvirtd is mad about dnsmasq and dmidecode just intsall and reboot
 
