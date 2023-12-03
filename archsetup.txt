@@ -381,3 +381,5 @@ Once you've managed to replace/upgrade it and you're ready to start the graphica
 that did not help after a reboot so i removed the drm part from /etc/default/grub
 
 so i think the best option is to add the vfio ids back to grub because it keeps loading grub and sddm on gpu then once hyprland loads we can have it run the en-nvidia command to re enable it if we want
+
+the video did the vgs and audio ones im also putting drm modeset back in
