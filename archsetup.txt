@@ -355,3 +355,5 @@ sticking with web version of discord as desktop screensharing works and installi
 installing gamescope
 
 uncomment the first line in waybar config to set its layer to top so context menus show up on top
+
+install intel-media-driver and xf86-video-intel
