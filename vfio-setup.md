@@ -243,6 +243,21 @@ now its time to add the gpu shutdown the vm and add pci host device then the gpu
 
 ok so all of the things in goup 10 from the arch wiki script need to be in the vfio pci list in grub and i think i dont know if i need to add all of them to the vm
 
+# started working on this again
+meyyh@arch ~]$ glxgears 
+X Error of failed request:  BadValue (integer parameter out of range for operation)
+  Major opcode of failed request:  150 (GLX)
+  Minor opcode of failed request:  3 (X_GLXCreateContext)
+  Value in failed request:  0x0
+  Serial number of failed request:  26
+  Current serial number in output stream:  27
+  
+also cant launch steam
+
+sudo virsh net-autostart default
+
+i get a display on the dp input on my monitor but i cant interact with the vm
+
 # links
 https://blandmanstudios.medium.com/tutorial-the-ultimate-linux-laptop-for-pc-gamers-feat-kvm-and-vfio-dee521850385
 - other guide on how to set this up on a laptop but still helpful 
