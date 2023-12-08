@@ -224,6 +224,7 @@ Once you've managed to replace/upgrade it and you're ready to start the graphica
 # systemctl start graphical.target
 
 that did not help after a reboot so i removed the drm part from /etc/default/grub
+in order to switch between host and guest input the default is pressing both ctrl at the same time if you sont have 2 or want to chane it edit grabToggle 
 
 so i think the best option is to add the vfio ids back to grub because it keeps loading grub and sddm on gpu then once hyprland loads we can have it run the en-nvidia command to re enable it if we want
 
@@ -258,6 +259,61 @@ sudo virsh net-autostart default
 
 i get a display on the dp input on my monitor but i cant interact with the vm
 
+setup ev dev to fix that 4.5 of the arch wiki link
+
+make sure to diable the other "monitor" in windows that is not directly attached to the gpu
+
+also to move an app to a different monitor its win + shift +1 arrow
+
+now onto cpu pinning 5.1 of the arch wiki based on some help from the vfio discord they recoemeded that you dont pin e cores in the vm as it will not know whats an e vs p core plus they also said try not to mix L3 and L2 cache (reminder to put image of cpu layout lstopo) 
+
+my p core are 0-11 so i change my vcpu line and add the cputune so it looks like this
+```
+...
+<vcpu placement='static'>12</vcpu>
+<cputune>
+  <vcpupin vcpu='0' cpuset='0'/>
+  <vcpupin vcpu='1' cpuset='1'/>
+  <vcpupin vcpu='2' cpuset='2'/>
+  <vcpupin vcpu='3' cpuset='3'/>
+  <vcpupin vcpu='4' cpuset='4'/>
+  <vcpupin vcpu='5' cpuset='5'/>
+  <vcpupin vcpu='6' cpuset='6'/>
+  <vcpupin vcpu='7' cpuset='7'/>
+  <vcpupin vcpu='8' cpuset='8'/>
+  <vcpupin vcpu='9' cpuset='9'/>
+  <vcpupin vcpu='10' cpuset='10'/>
+  <vcpupin vcpu='11' cpuset='11'/>
+</cputune>
+...
+```
+
+# dynamic isolation
+
+5.4.2.1 i will be using the libvirt hook shown and note allowed cpus here is for the host not the guest so edit /etc/libvirt/hooks/qemu
+
+note i needed to make the /etc/libvirt/hooks dir
+
+```
+#!/bin/sh
+
+command=$2
+
+if [ "$command" = "started" ]; then
+    systemctl set-property --runtime -- system.slice AllowedCPUs=12,13,14,15
+    systemctl set-property --runtime -- user.slice AllowedCPUs=12,13,14,15
+    systemctl set-property --runtime -- init.scope AllowedCPUs=12,13,14,15
+elif [ "$command" = "release" ]; then
+    systemctl set-property --runtime -- system.slice AllowedCPUs=0-15
+    systemctl set-property --runtime -- user.slice AllowedCPUs=0-15
+    systemctl set-property --runtime -- init.scope AllowedCPUs=0-15
+fi
+```
+remember to make it executable
+
+when using this instead of a kenel parameter we can isolate and un isolate the core withoutneed to edit config file and reboot
+
+
 # links
 https://blandmanstudios.medium.com/tutorial-the-ultimate-linux-laptop-for-pc-gamers-feat-kvm-and-vfio-dee521850385
 - other guide on how to set this up on a laptop but still helpful 
@@ -265,4 +321,3 @@ https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF
 
 # troubleshooting
 after running ```sudo dmesg | grep -i -e DMAR -e IOMMU``` you dont see IOMMU enabled read over https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF
-
