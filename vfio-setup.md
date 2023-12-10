@@ -21,7 +21,7 @@ there only are a few minor differences if you have an amd cpu but the biggest th
 
 
 
-# 1. Setup
+# Setup
 
 ### Install required packages
 ```
@@ -34,10 +34,10 @@ but make double check what driver you should use in the [NVIDIA](https://wiki.ar
 ```
 yay -S nvidia-open-dkms intel-media-driver
 ```
-- If you are using an nvidia gpu go to section 1.3.1.3 of the [NVIDIA](https://wiki.archlinux.org/title/NVIDIA) page and setup the pacman hook for your gou driver otherwise if you forget to regen initramfs after a kernel update your system wont boot.
+- If you are using an nvidia gpu go to section 1.3.1.3 of the [NVIDIA](https://wiki.archlinux.org/title/NVIDIA) page and setup the pacman hook for your gpu driver otherwise if you forget to regen initramfs after a kernel update your system wont boot.
 
 ## Initramfs config
-Add ```i915 vfio_pci vfio vfio_iommu_type1``` to MODULES=() and ```modprobe``` is in HOOKS=() in /etc/mkinitcpio.conf
+Add ```i915 vfio_pci vfio vfio_iommu_type1``` to MODULES=() and ```modprobe``` is in HOOKS=() in `/etc/mkinitcpio.conf`
 - you can remove `i915` if you are not using an intel igpu
 
 type `sudo mkinitcpio -p linux` to regen initramfs then reboot and make sure the system works
@@ -46,7 +46,7 @@ type `sudo mkinitcpio -p linux` to regen initramfs then reboot and make sure the
 ## Grub config
 if you are not using grub you can reference the [Kernel parameters](https://wiki.archlinux.org/title/Kernel_parameters) arch wiki page on what to do
 
-edit your /etc/default/grub so your GRUB_CMDLINE_LINUX_DEFAULT looks like this but with different vfio-pci.ids
+edit `etc/default/grub` so your GRUB_CMDLINE_LINUX_DEFAULT looks like this but with different vfio-pci.ids
 ```
 GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet intel_iommu=on iommu=pt rd.driver.pre=vfio-pci vfio-pci.ids=10de:1f02,10de:10f9,10de:1ada,10de:1adb rd.driver.blacklist=nouveau modprobe.blacklist=nouveau module_blacklist=nouveau nvidia_drm.modeset=1"
 ```
@@ -56,19 +56,16 @@ GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet intel_iommu=on iommu=pt rd.driver.p
 - intel_iommu=on iommu=pt
 >  - amd cpus dont need intel_iommu=on
 - rd.driver.pre=vfio-pci vfio-pci.ids=###
->  - rd.driver.pre makes sure the vfio driver gets loaded first or loaded at all idk and i will explain how to get vfio-pci.ids in the next part
+>  - rd.driver.pre makes sure the vfio driver gets loaded first and i will explain how to get vfio-pci.ids in the next part
 - rd.driver.blacklist=nouveau modprobe.blacklist=nouveau module_blacklist=nouveau
->  - dont load nouveau driver
+>  - dont load nouveau driver so if you dont have an nvidia card dont add these
 - nvidia_drm.modeset=1
->  - still dont know if this is needed or not
+>  - still dont know if this is needed or not i think it was for the hyprland config but hyprland is running off igpu now
 
-## how to get vfio-pci.ids
-- if you are eve confused about something this guide has been very helpful https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF  
-- the page does mention gpu-passthrough-manager but i never got it to work
+## how to get vfio-pci.ids 
+in section 2.2 of the [wiki](https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF) page it has a script to see your IOMMU groups. this is important beacause all or none of the devices in a group have to be "using" the vfio driver if you have only some of them using it you will just get a bunch of errors 
 
-in section 2.2 of that page it has a script to see your IOMMU groups this is important beacause its all or nothing for IOMMU groups because all or none of the devices in a group have to be "using" the vfio driver if you have only some of them using it you will just get a bunch of errors 
 
-$~$
 
 when I run the script I see my nvidia gpu is in group 10
 ```
@@ -80,36 +77,51 @@ OMMU Group 10:
 ```
 so my vfio ids look like this ```vfio-pci.ids=10de:1f02,10de:10f9,10de:1ada,10de:1adb```
 
-now that you have changed the mkinitcpio and grub config files run
-
-```
-sudo mkinitcpio -p linux && sudo grub-mkconfig -o /boot/grub/grub.cfg
-```
-## before you reboot
-
-
-
-
+now run `sudo grub-mkconfig -o /boot/grub/grub.cfg` but make sure your grub.cfg is in the same spot
 
 after you reboot you can make sure it worked by running
 ```
 sudo dmesg | grep -i -e DMAR -e IOMMU
 ```
-and looking for
+and look for
+
 > DMAR: IOMMU enabled
+
 and
+
 > DMAR: Intel(R) Virtualization Technology for Directed I/O
+
 or something mentioning AMD-Vi for amd cpus
 
 # disable and enable gpu
-
 at this point if we type ```lspci | grep -E 'VGA|3D'``` we should see vfio-pci as the driver being used
 
-	Subsystem: Gigabyte Technology Co., Ltd TU106 [GeForce RTX 2070] [1458:37c2]
-	Kernel driver in use: vfio-pci
-	Kernel modules: nouveau, nvidia_drm, nvidia
+```
+Subsystem: Gigabyte Technology Co., Ltd TU106 [GeForce RTX 2070] [1458:37c2]
+Kernel driver in use: vfio-pci
+Kernel modules: nouveau, nvidia_drm, nvidia
+```
 
-https://blandmanstudios.medium.com/tutorial-the-ultimate-linux-laptop-for-pc-gamers-feat-kvm-and-vfio-dee521850385
+this means that the gpu is in a "disabled" state and cant be used by the host if we want to "re-enable" it you can add 
+```
+alias ls-gpu='echo "Nvidia" && lspci -nnk | grep "VGA" -A 2 | grep "NVIDIA" -A 2 | grep "driver in use"'
+alias en-nvidia='sudo virsh nodedev-reattach pci_0000_01_00_0 && sudo rmmod vfio_pci vfio_pci_core vfio_iommu_type1 && sudo modprobe -i nvidia_modeset nvidia_uvm nvidia && echo "gpu enabled"'
+alias dis-nvidia='sudo rmmod nvidia_modeset nvidia_uvm nvidia && sudo modprobe -i vfio_pci vfio_pci_core vfio_iommu_type1 && sudo virsh nodedev-detach pci_0000_01_00_0 && echo "gpu disabled"'
+```
+
+to your .bashrc and running en-ndidia
+
+> note that this is an edited version from [blandmanstudios's]{https://blandmanstudios.medium.com/tutorial-the-ultimate-linux-laptop-for-pc-gamers-feat-kvm-and-vfio-dee521850385} guide
+> I would recomend you take a look at his and edit it to your liking like I did as mine is shorter but less neat output
+> ```
+> alias hows-my-gpu='echo "NVIDIA Dedicated Graphics" | grep "NVIDIA" && lspci -nnk | grep "NVIDIA Corporation GA107M" -A 2 | grep "Kernel driver in use" && echo "Intel Integrated Graphics" | grep "Intel" && lspci -nnk | grep "Intel.*Integrated Graphics Controller" -A 3 | grep "Kernel driver in use" && echo "Enable and disable the dedicated NVIDIA GPU with nvidia-enable and nvidia-disable"'
+> alias nvidia-enable='sudo virsh nodedev-reattach pci_0000_01_00_0 && echo "GPU reattached (now host ready)" && sudo rmmod vfio_pci vfio_pci_core vfio_iommu_type1 && echo "VFIO drivers removed" && sudo modprobe -i nvidia_modeset nvidia_uvm nvidia && echo "NVIDIA drivers added" && echo "COMPLETED!"'
+> alias nvidia-disable='sudo rmmod nvidia_modeset nvidia_uvm nvidia && echo "NVIDIA drivers removed" && sudo modprobe -i vfio_pci vfio_pci_core vfio_iommu_type1 && echo "VFIO drivers added" && sudo virsh nodedev-detach pci_0000_01_00_0 && echo "GPU detached (now vfio ready)" && echo "COMPLETED!"'
+> ```
+
+
+- if when typing dis-nvidia and get that nvidia_uvm or nvidia_modeset is not loaded type `sudo modprobe -i nvidia_uvm nvidia_modeset` to load them the type dis-nvidia to disable them
+need to figure out what is causing this
 
 # virt-manager qemu/kvm etc
 
@@ -117,7 +129,7 @@ https://blandmanstudios.medium.com/tutorial-the-ultimate-linux-laptop-for-pc-gam
 sudo systemctl enable libvirtd && sudo systemctl start libvirtd
 ```
   - start and enable qemu backend
-```
+```hai
 sudo usermod -aG libvirt $(whoami) 
 ```
   - add yourself to libvirt group so you dont need to enter root passwd
@@ -324,7 +336,8 @@ when using this instead of a kenel parameter we can isolate and un isolate the c
 
 # links
 https://blandmanstudios.medium.com/tutorial-the-ultimate-linux-laptop-for-pc-gamers-feat-kvm-and-vfio-dee521850385
-- other guide on how to set this up on a laptop but still helpful 
+- other guide on how to set this up on a laptop but still helpful
+
 https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF
 
 # troubleshooting
