@@ -1,43 +1,51 @@
-# warning
+# Warning
 
-this guide is specific to nvidia gpus so if you dont have one make sure you know what you are typing and why.
-there are a few minor differences if you have an amd cpu but the biggest thing is you **MUST** have 2 gpus for me thats an RTX 2070 and the iGPU of my 12600k we will rendering one of the useless to the host system while the vm is using it.
+This guide is using an nvidia gpu and intel igpueven if you have a different config this guide can still help.
+there only are a few minor differences if you have an amd cpu but the biggest thing is you **MUST** have 2 gpus.
 
-# troubleshooting tips and other links at bottom
 
-# this guide assumes that
+- troubleshooting tips and other links at bottom
 
-- you are using arch linux
-- [yay](https://github.com/Jguer/yay) is installed and multilib repo is enabled
-- you have 2 monitors
-- your motherboard needs to have 2 video out
-    - if you dont you will need to swap a cable from gpu to motherboard constantly
-- the main one is plugged into gpu via DP and mobo via HDMI
-- the secondary one is plugged into the mobo by DP
-- you using grub if you are not you can reference the [Kernel parameters](https://wiki.archlinux.org/title/Kernel_parameters) arch wiki page on what to do
-- you are using hyprland and sddm
-    - I dont know how much this matters but be aware its using wayland
+# My config
+- hardware 
+  - NVIDIA RTX 2070
+  - i5 12600k with igpu
+  - mobo with 2 video out
+- OS: arch linux
+  - [yay](https://github.com/Jguer/yay) is installed and multilib repo is enabled
+  - grub bootloader
+  - sddm login manager
+  - hyprland a wayland window manager
+- virtualization is enabled in bios
 
-# setup
-## enable virtualization in your bios
 
-## install required packages
+
+
+# 1. Setup
+
+### Install required packages
 ```
 yay -Syu && yay -S linux-firmware linux-headers qemu-full virt-manager dnsmasq dmidecode
 ```
-## intall gpu specific drivers 
+## Intall gpu specific drivers 
 
 for me this is nvidia-open-dkms and intel-media-driver.
 but make double check what driver you should use in the [NVIDIA](https://wiki.archlinux.org/title/NVIDIA) [AMD](https://wiki.archlinux.org/title/AMDGPU) [INTEL](https://wiki.archlinux.org/title/Intel_graphics) arch wiki pages
 ```
 yay -S nvidia-open-dkms intel-media-driver
 ```
-## nvidia driver 
-if you are using nvidia go to section 1.3.1.3 of the nvidia page and setup the pacman hook otherwise if you forget to regen initramfs after a kernel update your system wont boot
+- If you are using an nvidia gpu go to section 1.3.1.3 of the [NVIDIA](https://wiki.archlinux.org/title/NVIDIA) page and setup the pacman hook for your gou driver otherwise if you forget to regen initramfs after a kernel update your system wont boot.
 
-now add ```i915 vfio_pci vfio vfio_iommu_type1``` to MODULES=() and ```modprobe``` is in HOOKS=() in /etc/mkinitcpio.conf
+## Initramfs config
+Add ```i915 vfio_pci vfio vfio_iommu_type1``` to MODULES=() and ```modprobe``` is in HOOKS=() in /etc/mkinitcpio.conf
+- you can remove `i915` if you are not using an intel igpu
 
-### grub config
+type `sudo mkinitcpio -p linux` to regen initramfs then reboot and make sure the system works
+
+
+## Grub config
+if you are not using grub you can reference the [Kernel parameters](https://wiki.archlinux.org/title/Kernel_parameters) arch wiki page on what to do
+
 edit your /etc/default/grub so your GRUB_CMDLINE_LINUX_DEFAULT looks like this but with different vfio-pci.ids
 ```
 GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet intel_iommu=on iommu=pt rd.driver.pre=vfio-pci vfio-pci.ids=10de:1f02,10de:10f9,10de:1ada,10de:1adb rd.driver.blacklist=nouveau modprobe.blacklist=nouveau module_blacklist=nouveau nvidia_drm.modeset=1"
