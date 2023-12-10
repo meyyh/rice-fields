@@ -111,7 +111,7 @@ alias dis-nvidia='sudo rmmod nvidia_modeset nvidia_uvm nvidia && sudo modprobe -
 
 to your .bashrc and running en-ndidia
 
-> note that this is an edited version from [blandmanstudios's]{https://blandmanstudios.medium.com/tutorial-the-ultimate-linux-laptop-for-pc-gamers-feat-kvm-and-vfio-dee521850385} guide
+> note that this is an edited version from [blandmanstudios's](https://blandmanstudios.medium.com/tutorial-the-ultimate-linux-laptop-for-pc-gamers-feat-kvm-and-vfio-dee521850385) guide
 > I would recomend you take a look at his and edit it to your liking like I did as mine is shorter but less neat output
 > ```
 > alias hows-my-gpu='echo "NVIDIA Dedicated Graphics" | grep "NVIDIA" && lspci -nnk | grep "NVIDIA Corporation GA107M" -A 2 | grep "Kernel driver in use" && echo "Intel Integrated Graphics" | grep "Intel" && lspci -nnk | grep "Intel.*Integrated Graphics Controller" -A 3 | grep "Kernel driver in use" && echo "Enable and disable the dedicated NVIDIA GPU with nvidia-enable and nvidia-disable"'
