@@ -102,10 +102,11 @@ Kernel driver in use: vfio-pci
 Kernel modules: nouveau, nvidia_drm, nvidia
 ```
 
-this means that the gpu is in a "disabled" state and cant be used by the host if we want to "re-enable" it you can add 
+this means that the gpu is in a "disabled" state and cant be used by the host if we want to "re-enable" it you can add   
+(on en-nvidia you have to modprobe them one at a time or they dont all load idk why but this fixes it)
 ```
 alias ls-gpu='echo "Nvidia" && lspci -nnk | grep "VGA" -A 2 | grep "NVIDIA" -A 2 | grep "driver in use"'
-alias en-nvidia='sudo virsh nodedev-reattach pci_0000_01_00_0 && sudo rmmod vfio_pci vfio_pci_core vfio_iommu_type1 && sudo modprobe -i nvidia_modeset nvidia_uvm nvidia && echo "gpu enabled"'
+lias en-nvidia='sudo virsh nodedev-reattach pci_0000_01_00_0 && sudo rmmod vfio_pci vfio_pci_core vfio_iommu_type1 && sudo modprobe -i nvidia && sudo modprobe -i nvidia_modeset && sudo modprobe -i nvidia_uvm && echo "gpu enabled"'
 alias dis-nvidia='sudo rmmod nvidia_modeset nvidia_uvm nvidia && sudo modprobe -i vfio_pci vfio_pci_core vfio_iommu_type1 && sudo virsh nodedev-detach pci_0000_01_00_0 && echo "gpu disabled"'
 ```
 
