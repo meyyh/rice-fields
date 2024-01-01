@@ -63,7 +63,6 @@ yay -S nvidia-open-dkms hyprland kitty sddm-git firefox pipewire pipewire-alsa p
 sudo systemctl start sddm-git
 login
 
-admire hyprchan "if she shows up"
 
 set resolution
 
