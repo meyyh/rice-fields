@@ -1,0 +1,48 @@
+{
+    "window.titleBarStyle": "custom",
+    "editor.semanticTokenColorCustomizations": {},
+    "workbench.preferredHighContrastColorTheme": "Default Dark Modern",
+    "workbench.preferredHighContrastLightColorTheme": "Default High Contrast",
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {   "scope": "keyword.control",
+                "settings": {"foreground": "#f760f2"}
+            },
+            {   "scope": "string",
+                "settings": {"foreground": "#ffa37f"}
+            },
+            {   "scope": "entity.name.type.cpp",
+                "settings": {"foreground": "#0bcc7c"}
+            },
+            {   "scope": "entity.name.namespace.cpp",
+                "settings": {"foreground": "#0bcc7c"}
+            },
+            {   "scope": "entity.name.type.class.templated.cpp",
+                "settings": {"foreground": "#0bcc7c"}
+            },
+            {   "scope": "constant.language",
+                "settings": {"foreground": "#0b6dbd"}
+            },
+            {   "scope": "storage.type.built-in.primitive.cpp",
+                "settings": {"foreground": "#088cf9"}
+            },
+            {   "scope": "entity.name.function.preprocessor.cpp",
+                "settings": {"foreground": "#088cf9"}
+            },
+            {   "scope": "variable.other.local.cpp",
+                "settings": {"foreground": "#72cdfe"}
+            },
+            {   "scope": "entity.name.function.cpp",
+                "settings": {"foreground": "#f1f1a6"}
+            },
+            {   "scope": "entity.name.function.member.cpp",
+                "settings": {"foreground": "#f1f1a6"}
+            },
+            {   "scope": "entity.name.function.templated.cpp",
+                "settings": {"foreground": "#f1f1a6"}
+            }
+        ]
+    },
+    "git.openRepositoryInParentFolders": "never",
+    "explorer.confirmDelete": false
+}
