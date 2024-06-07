@@ -177,7 +177,7 @@ sudo systemctl enable & start libvird
 
 sudo usermod -aG libvirt USER so you dont need to enter root passwd
 
-here comes my first issue with the guide it tells you to put "nvidia-drm.modeset=1 intel_iommu=on iommu=pt rd.driver.pre=vfio-pci rd.driver.blacklist=nouveau modprobe.blacklist=nouveau module_blacklist=nouveau" in your GRUB_CMDLINE_LINUX how do we figure out what vfio-pci.ids to put run this command lspci -nnk ok but what ones lol get fucked mabye its in a different spot in the video but it should be there when he tells us about it so on to the arch wiki
+here comes my first issue with the guide it tells you to put "nvidia-drm.modeset=1 intel_iommu=on iommu=pt rd.driver.pre=vfio-pci rd.driver.blacklist=nouveau modprobe.blacklist=nouveau module_blacklist=nouveau" in your GRUB_CMDLINE_LINUX how do we figure out what vfio-pci.ids to put run this command lspci -nnk ok but what ones lol mabye its in a different spot in the video but it should be there when he tells us about it so on to the arch wiki
 ## dont add the vfio ids or gpu will be disabled by default
 
 
@@ -205,7 +205,7 @@ i must of not prayed hard enough as shit no workey
 
 you can test it with the commands and scripts in the vfio arch wiki
 
-no im just a fucking idjit and forgot to regen grub cfg
+no im just an idjit and forgot to regen grub cfg
 
 grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -259,7 +259,7 @@ and remember kids alawys regen grub cfg before crossing the road
 
 and reboot
 
-now if you followed along perfectly and copied my config your hyprland will fail to load why ... fuck if i know time for troubleshooting
+now if you followed along perfectly and copied my config your hyprland will fail to load why ... who knows time for troubleshooting
 
 ah so libvirtd is mad about dnsmasq and dmidecode just intsall and reboot
 
@@ -287,7 +287,7 @@ at this point out gpu looks like this
 	Kernel modules: nouveau, nvidia_drm, nvidia
 
 but how do we re enable our gpu oh very smart and wise writer of this guide who is very cool 
-ah yes wll you see this is one of the parts i like about the medium article its the alias's that they have you add that can turn your gpu "on" and "off" with ease but thats if it works right away and if my past expirence has taught me anything its that im in over my head and i dont know what the fuck is going on
+ah yes wll you see this is one of the parts i like about the medium article its the alias's that they have you add that can turn your gpu "on" and "off" with ease but thats if it works right away and if my past expirence has taught me anything its that im in over my head and i dont know what is going on
 
 tangent aside
 
