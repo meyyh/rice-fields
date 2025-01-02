@@ -1,0 +1,61 @@
+# Config for workstyle
+#
+# Format:
+# "pattern" = "icon"
+#
+# "pattern" must be lowercase
+#
+# The pattern will be used to match against the application name, class_id or WM_CLASS.
+# The icon will be used to represent that application.
+#
+# Note if multiple patterns are present in the same application name,
+# precedence is given in order of apparition in this file.
+
+"kitty" = ""
+"alacritty" = ""
+
+"google" = ""
+"private browsing" = ""
+"firefox" = ""
+"chrome" = ""
+
+"file manager" = ""
+"dolphin" = ""
+"thunar" = ""
+
+"github" = ""
+"rust" = ""
+"nvim" = ""
+"codium" = "󰨞"
+"code-oss" = "󰨞"
+
+
+"qbittorrent" = ""
+"wireshark" = "󱙳"
+
+"virt-manager" = ""
+"remmina" = "󰢹"
+
+"blender" = ""
+"gimp" = ""
+
+"discord" = ""
+"steam" = ""
+
+"keepassxc" = ""
+
+"gthumb" = ""
+"feh" = ""
+"menu" = ""
+"calculator" = ""
+"transmission" = ""
+"videostream" = ""
+"mpv" = ""
+"music" = ""
+"disk usage" = ""
+".pdf" = ""
+
+[other]
+fallback_icon = "🤨"
+deduplicate_icons = true 
+separator = ": "

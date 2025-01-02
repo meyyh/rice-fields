@@ -1,0 +1,6 @@
+{
+    "window.titleBarStyle": "custom",
+    "editor.fontVariations": false,
+    "editor.fontFamily": "'JetBrainsMono NF', 'Droid Sans Mono', 'monospace', monospace",
+    "editor.largeFileOptimizations": false
+}

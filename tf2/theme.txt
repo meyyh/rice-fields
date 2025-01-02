@@ -1,0 +1,48 @@
+#general setting
+title-text: ""
+title-font: "TITANFALL FRONTLINE Regular 24"
+title-color: "#FFF"
+message-font: "Grand Wilson Sans DEMO Regular 20"
+message-color: "#000"
+message-bg-color: "#fff"
+terminal-font: "Unifont Regular 16"
+desktop-image: "1080p.jpg"
+
++ label {
+	top = 10%
+	left = 10%
+	width = 100%
+	text = "TITANFALL | 2"
+	font = "TITANFALL FRONTLINE Regular 48"
+	color = "#FFF"
+	aligh = "left"
+}
+
+#boot menu
++ boot_menu {
+	left = 10%
+	width = 80%
+	top = 25%
+	height = 50%	
+	item_font = "Grand Wilson Sans DEMO Regular 20"
+	item_color = "#FFF"
+	selected_item_font = "Grand Wilson Sans DEMO Regular 20"
+	selected_item_color= "#000"
+	selected_item_pixmap_style = "select_*.png"
+	item_height = 26
+	item_padding = 0
+	item_icon_space = 0
+	item_spacing = 1
+}
+
+#help bar at the bottom
++ label {
+	top = 100%-25
+	left = 0
+	width = 100%
+	height = 20
+	text = "@KEYMAP_MIDDLE@"
+	align = "center"
+	font = "Unifont Regular 16"
+	color = "#FFF"
+}

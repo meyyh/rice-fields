@@ -1,0 +1,134 @@
+{
+    "layer": "top",
+    "position": "top",
+    //"height": 24,  nixos logo  memory
+    "spacing": 0,
+    "reload_style_on_change": true,
+    "modules-left": ["hyprland/workspaces", "cpu", "memory", "temperature", "disk", "custom/network"],
+    "modules-center": [],
+    "modules-right": ["tray", "backlight", "pulseaudio", "battery", "custom/spotify", "custom/notifications", "clock"],
+    "cpu": {
+        "format": " {usage}%"
+    },
+    "memory": {
+        "format": " {percentage}%",
+        "tooltip": false
+    },
+    "temperature": {
+        "format": "{temperatureC}°C",
+        "format-icons": ["", "", "", "", ""],
+        "tooltip": false
+    },
+    "disk": {
+        "interval": 3,
+        "format": " {used}/{total}",
+        "path": "/"
+    },
+    "custom/network": {
+        "format": " {}",
+        "format-alt": "{alt}",
+        "tooltip": "{tooltip}",
+        "exec": "~/.config/waybar/scripts/total-network.sh",
+        "return-type": "json",
+        "interval": 5
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}",
+        "format-bluetooth": "{icon}  {volume}",
+        "format-bluetooth-muted": "󰝟 {icon} ",
+        "format-muted": "",
+        "tooltip-format": "{icon} {desc} // {volume}%",
+        "scroll-step": 5,
+        "format-icons": {
+          "headphone": "",
+          "hands-free": "",
+          "headset": "",
+          "phone": "",
+          "portable": "",
+          "car": "",
+          "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+    "battery": {
+        "states": {
+            // "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-full": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ",
+        "format-plugged": "{capacity}% ",
+        "format-alt": "{time} {icon}",
+        // "format-good": "", // An empty format will hide the module
+        // "format-full": "",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "tray": {
+        "icon-size": 16,
+        "spacing": 10
+    },
+    "clock": {
+        "format": "{:%H:%M 󰃭 %d %b}",
+        "format-alt": "{:%d-%m-%Y}"
+    },
+    "backlight": {
+        "device": "amdgpu_bl1",
+        "format": "{percent}% {icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", ""]
+    },
+    "custom/notifications": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+          "notification": " <span foreground='red'><sup></sup></span>",
+          // "notification": "🔔 <span foreground='red'><sup></sup></span>",
+          // "none": "🔔",
+          "none": "",
+          "dnd-notification": "<span foreground='red'><sup></sup></span>",
+          "dnd-none": ""
+    
+          // "dnd-notification": "🔕 <span foreground='red'><sup></sup></span>"
+          // "dnd-none": "🔕"
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "sleep 0.1; swaync-client -t -sw",
+        "on-click-right": "sleep 0.1; swaync-client -d -sw",
+        "escape": true
+    },
+    "custom/spotify": {
+        "format": "{}",
+        "escape": true,
+        "return-type": "text",
+        "max-length": 40,
+        "interval": 5, // Remove this if your script is endless and write in loop
+        "on-click": "playerctl -p spotify play-pause",
+        "on-click-right": "playerctl -p spotify play-pause",
+        "smooth-scrolling-threshold": 10, // This value was tested using a trackpad, it should be lowered if using a mouse.
+        "on-scroll-up" : "playerctl -p spotify next",
+        "on-scroll-down" : "playerctl -p spotify previous",
+        "exec": "~/.config/waybar/scripts/spotify.sh", // Script in resources/custom_modules folder
+        "exec-if": "pgrep spotify",
+        "tooltip": false
+    },
+    "hyprland/workspaces": {
+        "format": "{icon}"
+    },
+    "hyprland/window": {
+    "format": "{}",
+    "separate-outputs": true,
+    "max-length": 32,
+    "rewrite": {
+        "(.*)kitty": "> [$1]",
+        "(.*)Mozilla Firefox": "Firefox 󰈹",
+        "(.*)BlueMail": "BlueMail 󰊫 ",
+        "(.*)Visual Studio Code": "Code 󰨞",
+        "(.*)Dolphin": "$1 󰉋",
+        "(.*)Spotify Premium": "Spotify 󰓇",
+        "(.*)Steam": "Steam 󰓓"
+        }
+    }
+}

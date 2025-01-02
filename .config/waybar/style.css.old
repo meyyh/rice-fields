@@ -1,0 +1,299 @@
+/* Universal Styling */
+* {
+  border: none;
+  border-radius: 0;
+  font-family: "CaskaydiaCove Nerd Font", monospace;
+  font-size: 13px;
+  min-height: 0;
+  margin-top: 1px;
+}
+
+#waybar {
+  background: transparent;
+}
+
+#workspaces,
+#cpu,
+#memory,
+#temperature,
+#disk,
+#pulseaudio,
+#battery,
+#clock,
+#tray,
+
+
+/* #custom-hyprshade, */
+#custom-weather {
+  background-color: rgba(51, 68, 100, 0.9);
+  color: @yellow;
+  border-radius: 16px;
+  padding: 0.5rem 1rem;
+  /* box-shadow: rgba(0, 0, 0, 0.116) 2px 2px 5px 2px; */
+  
+  /*
+    margin-bottom: 10px;
+*/
+}
+
+
+/* =============================== */
+/* Workspaces */
+#workspaces {
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-right: 2px;
+  margin-left: 3px;
+}
+
+#workspaces * {
+  font-size: 0px;
+}
+
+#workspaces button {
+  background-color: @surface3;
+  color: @mauve;
+  border-radius: 100%;
+  min-height: 14px;
+  min-width: 14px;
+  margin: 5px 8px;
+  padding: 0px;
+  /*transition: all 0.5s cubic-bezier(0.33, 1.0, 0.68, 1.0); easeInOutCubic */
+  transition: all 0.5s cubic-bezier(0.55, -0.68, 0.48, 1.68);
+  box-shadow: rgba(0, 0, 0, 0.288) 2px 2px 5px 2px;
+}
+
+
+
+#workspaces button:hover {
+  background-color: @mauve;
+}
+
+
+#cpu {
+  color: @color1;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-left: 2px;
+  padding-right: 5px;
+}
+
+#memory {
+  color: @color4;
+  border-radius: 0px;
+  margin-left: 0px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#temperature {
+  color: @color1;
+  border-radius: 0px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#disk {
+  color: @color2;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-right: 3px;
+  padding-left: 5px;
+  padding-right: 1rem;
+}
+
+
+
+#clock {
+  color: @color3;
+  margin-right: 3px;
+  margin-left: 2px;
+}
+
+/* =============================== */
+/* Network Module */
+#network {
+  color: @color3;
+  /* margin-right: 10px;
+  padding-left: 5px; */
+  /* padding-right: 1rem; */
+}
+
+/* =============================== */
+
+/* =============================== */
+/* PulseAudio Module */
+#pulseaudio {
+  color: @color3;
+  /* border-radius: 0px; */
+  /* margin-right: 0px; */
+  /* padding-left: 5px; */
+  /* padding-right: 5px; */
+  
+  padding-right: 5px;
+  margin-right: 0px;
+
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+#battery {
+  color: @green;
+  margin-left: 0px;
+  margin-right: 2px;
+
+  padding-right: 5px;
+
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+
+#custom-spotify {
+  color: @color6;
+  /* border-radius: 0px; */
+  /* margin-right: 0px; */
+  /* padding-left: 5px; */
+  /* padding-right: 5px; */
+  border-radius: 0px;
+  /* padding-right: 5px; */
+}
+
+#custom-chwp {
+  color: @color2;
+  padding-left: 5px;
+  border-radius: 0px;
+}
+
+/* =============================== */
+
+/* =============================== */
+/* Backlight Module */
+#backlight {
+  color: @peach;
+  border-radius: 0;
+  margin-right: 0px;
+  padding-left: 5px;
+  padding-right: 5px;border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* =============================== */
+
+/* =============================== */
+/* Hyprshad Module */
+
+/* #custom-hyprshade { */
+/*   color: @yellow; */
+/*   border-top-right-radius: 0; */
+/*   border-bottom-right-radius: 0; */
+/*   margin-right: 0px; */
+/*   padding-right: 5px; */
+/* } */
+/* =============================== */
+
+/* =============================== */
+
+
+
+#battery.charging {
+  color: @green;
+}
+
+#battery.warning:not(.charging) {
+  color: @maroon;
+}
+
+#battery.critical:not(.charging) {
+  color: @red;
+  animation-name: blink;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes blink {
+  to {
+    background: @red;
+    color: @surface1;
+  }
+}
+
+/* =============================== */
+
+/* Notifications Module */
+#custom-notifications {
+  color: @color2;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding-left: 5px;
+  padding-right: 1.25rem;
+  margin-right: 10px;
+}
+
+/* =============================== */
+/* Tray Module */
+#tray {
+  color: @mauve;
+  /* padding-right: 1.25rem; */
+  border-radius: 0px;
+}
+
+/* =============================== */
+
+/* =============================== */
+/* |       Custom Modules        | */
+/* =============================== */
+#custom-custom {
+  color: @peach;
+  padding-right: 1.25rem;
+  margin-right: 0px;
+}
+
+/* Screenshot */
+#custom-ss {
+  color: @mauve;
+  padding-right: 1.5rem;
+}
+
+/* Wallpaper */
+#custom-cycle_wall {
+  background: linear-gradient(
+    45deg,
+    rgba(245, 194, 231, 1) 0%,
+    rgba(203, 166, 247, 1) 0%,
+    rgba(243, 139, 168, 1) 13%,
+    rgba(235, 160, 172, 1) 26%,
+    rgba(250, 179, 135, 1) 34%,
+    rgba(249, 226, 175, 1) 49%,
+    rgba(166, 227, 161, 1) 65%,
+    rgba(148, 226, 213, 1) 77%,
+    rgba(137, 220, 235, 1) 82%,
+    rgba(116, 199, 236, 1) 88%,
+    rgba(137, 180, 250, 1) 95%
+  );
+  background-size: 500% 500%;
+  animation: gradient 7s linear infinite;
+}
+
+/* Notifications Module */
+#custom-clipboard {
+  color: @mauve;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-right: 0px;
+  padding-right: 8px;
+}
+
+/* Powermenu Module */
+#custom-power {
+  /* color: @mauve; */
+  color: @red;
+  /* border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding-left: 8px; */
+  padding-right: 1.2rem;
+}
+
+/* =============================== */
