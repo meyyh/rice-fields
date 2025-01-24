@@ -1,26 +1,18 @@
 format = """
-[](#9A348E)\
+[](#1793D1)\
 $os\
-$username\
-[](bg:#DA627D fg:#9A348E)\
+[](bg:#DA627D fg:#1793D1)\
 $directory\
 [](fg:#DA627D bg:#FCA17D)\
 $git_branch\
 $git_status\
-[](fg:#FCA17D bg:#86BBD8)\
+[](fg:#FCA17D bg:#306998)\
 $c\
-$elixir\
-$elm\
 $golang\
-$gradle\
-$haskell\
 $java\
-$julia\
-$nodejs\
-$nim\
 $rust\
-$scala\
-[](fg:#86BBD8 bg:#06969A)\
+$python\
+[](fg:#306998 bg:#06969A)\
 $docker_context\
 [](fg:#06969A bg:#33658A)\
 $time\
@@ -42,7 +34,7 @@ disabled = false
 # An alternative to the username module which displays a symbol that
 # represents the current operating system
 [os]
-style = "bg:#9A348E"
+style = "bg:#1793D1"
 disabled = false # Disabled by default
 
 [os.symbols]
@@ -69,23 +61,13 @@ truncation_symbol = "…/"
 
 [c]
 symbol = " "
-style = "bg:#86BBD8"
+style = "bg:#306998"
 format = '[ $symbol ($version) ]($style)'
 
 [docker_context]
 symbol = " "
 style = "bg:#06969A"
 format = '[ $symbol $context ]($style)'
-
-[elixir]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[elm]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
 
 [git_branch]
 symbol = ""
@@ -101,32 +83,8 @@ symbol = " "
 style = "bg:#86BBD8"
 format = '[ $symbol ($version) ]($style)'
 
-[gradle]
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[haskell]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
 [java]
 symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[julia]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[nodejs]
-symbol = ""
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
-
-[nim]
-symbol = "󰆥 "
 style = "bg:#86BBD8"
 format = '[ $symbol ($version) ]($style)'
 
@@ -135,13 +93,14 @@ symbol = ""
 style = "bg:#86BBD8"
 format = '[ $symbol ($version) ]($style)'
 
-[scala]
-symbol = " "
-style = "bg:#86BBD8"
-format = '[ $symbol ($version) ]($style)'
+[python]
+symbol = "󰌠"
+style = "bg:#306998"
+format = '[ ${symbol} ${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+detect_files = ['.python-version', 'Pipfile', '__init__.py', 'pyproject.toml', 'requirements.txt', 'setup.py', 'tox.ini', 'pixi.toml']
 
 [time]
 disabled = false
 time_format = "%R" # Hour:Minute Format
 style = "bg:#33658A"
-format = '[ ♥ $time ]($style)'
+format = '[ $time ]($style)'

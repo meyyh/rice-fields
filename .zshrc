@@ -20,6 +20,8 @@ bindkey  "^[[3~"  delete-char
 
 export WGETRC=~/.config/wget/wgetrc
 export CARGO_HOME=~/.lang/rust/cargo
+export STARSHIP_CONFIG=~/.config/starship/starship.toml
+export STARSHIP_CACHE=~/.config/starship/cache
 
 alias ls="ls --color"
 alias la="ls -a"
