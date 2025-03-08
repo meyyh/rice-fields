@@ -1,5 +1,6 @@
 7zip
 acpi
+aircrack-ng
 alacritty
 amd-ucode
 android-file-transfer
@@ -32,7 +33,9 @@ dnsmasq
 dolphin
 drkonqi
 dunst
+eclipse-java-bin
 efibootmgr
+emote
 ethtool
 eww
 fastfetch
@@ -100,8 +103,8 @@ linux-firmware
 linux-headers
 man-db
 man-pages
+maven
 milou
-mods
 mpd
 mpv
 mullvad-vpn-bin
@@ -147,6 +150,8 @@ powerdevil
 powertop
 print-manager
 python-chardet
+python-quart
+python-unitypackage_extractor
 qbittorrent
 qemu-full
 qimgv
@@ -162,7 +167,11 @@ qt6ct
 radeontop
 rdesktop
 remmina
+retroarch
+retroarch-assets-ozone
+retroarch-assets-xmb
 rofi-wayland
+rpi-imager
 rustup
 samdump2
 sddm
