@@ -1,0 +1,8 @@
+~/.config/hypr
+~/.config/starship
+~/.config/VSCodium/User/settings.json
+~/.config/waybar
+~/.config/wget/wgetrc
+~/.config/workstyle/config.toml
+~/.config/zsh/zsh-autosuggestions.zsh
+~/.zshrc
